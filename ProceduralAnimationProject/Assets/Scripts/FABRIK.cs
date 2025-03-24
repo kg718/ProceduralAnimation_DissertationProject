@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class FABRIK : MonoBehaviour
 {
+    [SerializeField] private GameObject targetObject;
+
     [SerializeField] private List<Transform> joints = new List<Transform>();
     [SerializeField] private List<float> lengths = new List<float>();
 
@@ -15,7 +17,6 @@ public class FABRIK : MonoBehaviour
     private bool iteratingForward = false;
     private bool isIterating = true;
 
-    [SerializeField] private Transform a;
 
     void Start()
     {
@@ -30,7 +31,7 @@ public class FABRIK : MonoBehaviour
 
     void Update()
     {
-        targetPosition = a.position;
+        startPosition = transform.position;
         if(!isIterating)
         {
             return;
@@ -96,5 +97,36 @@ public class FABRIK : MonoBehaviour
             joints[jointCount].position = targetPosition;
             iteratingForward = false;
         }
+    }
+
+    //public void SetTarget(Vector3 _newTarget)
+    //{
+    //    footTargetPosition = _newTarget;
+    //}
+
+    public Vector3 GetTargetPosition()
+    {
+        return targetObject.transform.position;
+    }
+
+    public void SetTargetPosition(Vector3 _position)
+    {
+        targetObject.transform.position = _position;
+    }
+
+    public Vector3 GetEndEffectorPosition()
+    {
+        return joints[jointCount].position;
+    }
+
+    public void SetFABRIKTarget(Vector3 _position)
+    {
+        targetPosition = _position;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(targetObject.transform.position, 0.5f);
     }
 }
