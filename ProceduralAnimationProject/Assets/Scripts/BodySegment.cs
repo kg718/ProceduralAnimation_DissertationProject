@@ -7,6 +7,7 @@ public class BodySegment : MonoBehaviour
     [SerializeField] private LegAnimation rightLeg;
     [SerializeField] private leg nextLeg;
     [SerializeField] private float followSpeed;
+    [SerializeField] private LayerMask groundLayers;
 
     private BodySegment previousSegment;
     private bool isHead = false;
@@ -42,11 +43,20 @@ public class BodySegment : MonoBehaviour
         }
         Vector3 _moveDir = previousSegment.transform.position - transform.position;
         Quaternion lookDir = Quaternion.LookRotation(_moveDir);
+        _moveDir = new Vector3(_moveDir.x, 0, _moveDir.z);
         transform.rotation = lookDir;
-        if (_moveDir.magnitude > 2.5)
+        if (_moveDir.magnitude > 2.3)
         {
             transform.position += _moveDir.normalized * followSpeed;
         }
+        if (_moveDir.magnitude < 2.7)
+        {
+            transform.position -= _moveDir.normalized * followSpeed;
+        }
+
+        RaycastHit _hit;
+        Physics.Raycast(transform.position, Vector3.down, out _hit, groundLayers);
+        transform.position = new Vector3(transform.position.x, _hit.point.y + 3, transform.position.z);
     }
 
     public void UpdateNextLeg()
