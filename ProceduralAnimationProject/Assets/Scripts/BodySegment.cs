@@ -9,6 +9,8 @@ public class BodySegment : MonoBehaviour
     [SerializeField] private float followSpeed;
     [SerializeField] private LayerMask groundLayers;
 
+    [SerializeField] private float bodyHeight = 3;
+
     private BodySegment previousSegment;
     private bool isHead = false;
 
@@ -56,7 +58,7 @@ public class BodySegment : MonoBehaviour
 
         RaycastHit _hit;
         Physics.Raycast(transform.position, Vector3.down, out _hit, groundLayers);
-        transform.position = new Vector3(transform.position.x, _hit.point.y + 3, transform.position.z);
+        transform.position = new Vector3(transform.position.x, _hit.point.y + bodyHeight, transform.position.z);
     }
 
     public void UpdateNextLeg()

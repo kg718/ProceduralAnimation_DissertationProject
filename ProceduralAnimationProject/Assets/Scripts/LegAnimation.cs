@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(FABRIK))]
+[RequireComponent(typeof(InverseKinematics))]
 public class LegAnimation : MonoBehaviour
 {
     [SerializeField] private LayerMask walkableLayers;

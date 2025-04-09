@@ -221,6 +221,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  bodyHeight: 5
 --- !u!135 &17067920
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -238,7 +239,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1620,6 +1621,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  bodyHeight: 5
 --- !u!4 &475818629
 Transform:
   m_ObjectHideFlags: 0
@@ -1654,7 +1656,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -5029,6 +5031,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  bodyHeight: 5
 --- !u!4 &1119567505
 Transform:
   m_ObjectHideFlags: 0
@@ -5063,7 +5066,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -8124,6 +8127,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  bodyHeight: 5
 --- !u!4 &1764123190
 Transform:
   m_ObjectHideFlags: 0
@@ -8158,7 +8162,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -8795,6 +8799,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  bodyHeight: 5
 --- !u!135 &1934947648
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8812,7 +8817,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -9571,6 +9576,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 904914868}
     m_Modifications:
+    - target: {fileID: 801042508206621859, guid: 950b3ee34ee557448ac1bbeb771e0330, type: 3}
+      propertyPath: bodyHeight
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7163196582304554553, guid: 950b3ee34ee557448ac1bbeb771e0330, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

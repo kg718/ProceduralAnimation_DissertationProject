@@ -27,7 +27,7 @@ public class CreatureMovement : MonoBehaviour
     {
         RaycastHit _hit;
         Physics.Raycast(creature.segments[0].transform.position, Vector3.down, out _hit, 10, groundLayers);
-        creature.segments[0].transform.position = new Vector3(creature.segments[0].transform.position.x, _hit.point.y + 3, creature.segments[0].transform.position.z);
+        creature.segments[0].transform.position = new Vector3(creature.segments[0].transform.position.x, _hit.point.y + 5, creature.segments[0].transform.position.z);
     }
 
     private void FixedUpdate()

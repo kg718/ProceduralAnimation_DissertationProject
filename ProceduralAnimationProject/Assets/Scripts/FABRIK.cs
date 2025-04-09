@@ -1,19 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FABRIK : MonoBehaviour
+public class FABRIK : InverseKinematics
 {
-    [SerializeField] private GameObject targetObject;
-
-    [SerializeField] private List<Transform> joints = new List<Transform>();
-    [SerializeField] private List<float> lengths = new List<float>();
-
-    private float totalLength;
-    private Vector3 startPosition;
-    private Vector3 targetPosition;
-
-    private int jointCount;
-
     private bool iteratingForward = false;
     private bool isIterating = true;
 
