@@ -3,26 +3,28 @@ using UnityEngine;
 [RequireComponent(typeof(InverseKinematics))]
 public class LegAnimation : MonoBehaviour
 {
+    [SerializeField] private IKType.IKMode ikMode = IKType.IKMode.FABRIK;
     [SerializeField] private LayerMask walkableLayers;
     [SerializeField] private float stepDistance;
     [SerializeField] private float stepHeight;
     [SerializeField] private float stepSpeed;
+    [SerializeField] private FootOrientation footOrientation;
     private float currentStepTimer = 1;
     private bool isStepping = false;
     private bool canStep = true;
 
     private BodySegment segment;
-    private FABRIK legFabrik;
+    private InverseKinematics legIK;
 
     private Vector3 oldPosition;
     private Vector3 newPosition;
 
     void Start()
     {
-        legFabrik = GetComponent<FABRIK>();
+        legIK = GetComponent<InverseKinematics>();
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, 20, walkableLayers);
-        legFabrik.SetTargetPosition(hit.point);
+        legIK.SetTargetPosition(hit.point);
     }
 
     void Update()
@@ -33,7 +35,7 @@ public class LegAnimation : MonoBehaviour
             Vector3 _lerpedPosition = oldPosition + (newPosition - oldPosition) * currentStepTimer;
             _lerpedPosition.y += Mathf.Sin(currentStepTimer * Mathf.PI) * stepHeight;
 
-            legFabrik.SetFABRIKTarget(_lerpedPosition);
+            legIK.SetIKTarget(_lerpedPosition);
         }
         else
         {
@@ -44,18 +46,20 @@ public class LegAnimation : MonoBehaviour
             oldPosition = newPosition;
             isStepping = false;
         }
-        RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit, 20, walkableLayers);
-        legFabrik.SetTargetPosition(hit.point);
+        RaycastHit _hit;
+        Physics.Raycast(transform.position, Vector3.down, out _hit, 20, walkableLayers);
+        footOrientation.OrientFoot(_hit);
+        legIK.SetTargetPosition(_hit.point);
 
-        if (Mathf.Sqrt(Mathf.Pow((legFabrik.GetTargetPosition().x - legFabrik.GetEndEffectorPosition().x), 2) + Mathf.Pow((legFabrik.GetTargetPosition().y - legFabrik.GetEndEffectorPosition().y), 2)) >= stepDistance && !isStepping)
+
+        if (Mathf.Sqrt(Mathf.Pow((legIK.GetTargetPosition().x - legIK.GetEndEffectorPosition().x), 2) + Mathf.Pow((legIK.GetTargetPosition().y - legIK.GetEndEffectorPosition().y), 2)) >= stepDistance && !isStepping)
         {
-            if (!canStep ||currentStepTimer < 0)
+            if (!canStep || currentStepTimer < 0)
             {
                 return;
             }
             currentStepTimer = 0;
-            newPosition = legFabrik.GetTargetPosition();
+            newPosition = legIK.GetTargetPosition();
             isStepping = true;
         }
     }

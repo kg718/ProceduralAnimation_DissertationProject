@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class IKJoint : MonoBehaviour
 {
-    [SerializeField] private bool usingFABRIK = true;
+    [SerializeField] private IKType.IKMode ikMode = IKType.IKMode.FABRIK;
     [SerializeField] private IKJoint nextJoint;
     //[SerializeField] private bool endEffector = false;
 
@@ -18,10 +18,13 @@ public class IKJoint : MonoBehaviour
             return;
         }
 
-        if (usingFABRIK)
+        if (ikMode == IKType.IKMode.FABRIK)
         {
             Vector3 _jointDir = nextJoint.transform.position - transform.position;
-            transform.rotation = Quaternion.LookRotation(_jointDir);
+            if(_jointDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(_jointDir);
+            }
         }
     }
 }

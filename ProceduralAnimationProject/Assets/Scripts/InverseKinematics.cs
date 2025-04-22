@@ -13,4 +13,24 @@ public class InverseKinematics : MonoBehaviour
     protected Vector3 targetPosition;
 
     protected int jointCount;
+
+    public virtual Vector3 GetTargetPosition()
+    {
+        return new Vector3();
+    }
+
+    public virtual void SetTargetPosition(Vector3 _position)
+    {
+        
+    }
+
+    public virtual Vector3 GetEndEffectorPosition()
+    {
+        return new Vector3();
+    }
+
+    public virtual void SetIKTarget(Vector3 _position)
+    {
+
+    }
 }

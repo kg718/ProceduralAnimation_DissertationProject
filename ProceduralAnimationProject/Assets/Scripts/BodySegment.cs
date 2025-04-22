@@ -87,4 +87,18 @@ public class BodySegment : MonoBehaviour
     {
         isHead = true;
     }
+
+    public void EditLegs(bool _hasLegs)
+    {
+        if (_hasLegs)
+        {
+            leftLeg.gameObject.SetActive(true);
+            rightLeg.gameObject.SetActive(true);
+        }
+        else
+        {
+            leftLeg.gameObject.SetActive(false);
+            rightLeg.gameObject.SetActive(false);
+        }
+    }
 }

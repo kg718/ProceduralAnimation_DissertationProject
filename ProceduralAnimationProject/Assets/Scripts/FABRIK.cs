@@ -5,7 +5,6 @@ public class FABRIK : InverseKinematics
     private bool iteratingForward = false;
     private bool isIterating = true;
 
-
     void Start()
     {
         startPosition = transform.position;
@@ -31,7 +30,6 @@ public class FABRIK : InverseKinematics
             for (int i = 1; i <= jointCount; i++)
             {
                 joints[i].position = joints[i - 1].position + _jointDir * lengths[i - 1];
-                //joints[i].rotation = Quaternion.LookRotation(_jointDir);
             }
             return;
         }
@@ -52,7 +50,6 @@ public class FABRIK : InverseKinematics
         {
             Vector3 _jointDir = (joints[i].position - joints[i - 1].position).normalized;
             joints[i].position = joints[i - 1].position + _jointDir * lengths[i - 1];
-            //joints[i].rotation = Quaternion.LookRotation(_jointDir);
             if (i == jointCount)
             {
                 StartIteration(false);
@@ -87,27 +84,22 @@ public class FABRIK : InverseKinematics
         }
     }
 
-    //public void SetTarget(Vector3 _newTarget)
-    //{
-    //    footTargetPosition = _newTarget;
-    //}
-
-    public Vector3 GetTargetPosition()
+    public override Vector3 GetTargetPosition()
     {
         return targetObject.transform.position;
     }
 
-    public void SetTargetPosition(Vector3 _position)
+    public override void SetTargetPosition(Vector3 _position)
     {
         targetObject.transform.position = _position;
     }
 
-    public Vector3 GetEndEffectorPosition()
+    public override Vector3 GetEndEffectorPosition()
     {
         return joints[jointCount].position;
     }
 
-    public void SetFABRIKTarget(Vector3 _position)
+    public override void SetIKTarget(Vector3 _position)
     {
         targetPosition = _position;
     }

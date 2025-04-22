@@ -12,17 +12,15 @@ public class CCD : InverseKinematics
         {
             totalLength += _length;
         }
-
-        InvokeRepeating("Iterate", 1f, 0.5f);
     }
 
     void Update()
     {
-        SetCCDTarget(targetObject.transform.position);
         if (!isIterating)
         {
             return;
         }
+        Iterate();
     }
 
     private void Iterate()
@@ -32,16 +30,34 @@ public class CCD : InverseKinematics
             Vector3 _jointToEffector = joints[jointCount].transform.position - joints[i].transform.position;
             Vector3 _jointToTarget = targetPosition - joints[i].transform.position;
 
-            //Vector3 _jointDir = nextJoint.transform.position - transform.position;
-             Quaternion _fromToRotation = Quaternion.FromToRotation(_jointToEffector, _jointToTarget) * joints[i].transform.rotation;
-            joints[i].transform.rotation = _fromToRotation;
-            //joints[i].transform.rotation = Quaternion.LookRotation(_jointToTarget);
-            
+            Quaternion _fromToRotation = Quaternion.FromToRotation(_jointToEffector, _jointToTarget) * joints[i].transform.rotation;
+            joints[i].transform.rotation = _fromToRotation;            
         }
     }
 
-    public void SetCCDTarget(Vector3 _position)
+    public override Vector3 GetTargetPosition()
+    {
+        return targetObject.transform.position;
+    }
+
+    public override void SetTargetPosition(Vector3 _position)
+    {
+        targetObject.transform.position = _position;
+    }
+
+    public override Vector3 GetEndEffectorPosition()
+    {
+        return joints[jointCount].position;
+    }
+
+    public override void SetIKTarget(Vector3 _position)
     {
         targetPosition = _position;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(targetObject.transform.position, 0.5f);
     }
 }
