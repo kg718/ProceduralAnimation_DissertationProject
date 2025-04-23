@@ -101,4 +101,12 @@ public class BodySegment : MonoBehaviour
             rightLeg.gameObject.SetActive(false);
         }
     }
+
+    public void EditScale(float _scale)
+    {
+        transform.localScale = new Vector3(_scale, _scale, _scale);
+
+        leftLeg.gameObject.transform.localScale = new Vector3(1 / _scale, 1 / _scale, 1 / _scale);
+        rightLeg.gameObject.transform.localScale = new Vector3(1 / _scale, 1 / _scale, 1 / _scale);
+    }
 }

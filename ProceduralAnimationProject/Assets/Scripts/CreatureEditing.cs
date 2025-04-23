@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -42,6 +43,14 @@ public class CreatureEditing : MonoBehaviour
             activeSegments = Mathf.RoundToInt(panel.bodySegmentCountSlider.value);
         }
 
+    }
+
+    public void UpdateBodySegmentScale()
+    {
+        for (int i = 0; i < creature.segments.Length; i++)
+        {
+            creature.segments[i].EditScale(panel.bodySegmentScaleSlider.value);
+        }
     }
 
     public void UpdateLegs()
