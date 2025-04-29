@@ -10,8 +10,11 @@ public class CreatureMovement : MonoBehaviour
     [SerializeField] private float deceleration;
 
     [SerializeField] private LayerMask groundLayers;
+    public float groundDetectionRange = 25f;
     private float moveMult;
     private Vector2 inputDir;
+
+    public float bodyHeight = 5f;
 
     private void Awake()
     {
@@ -26,8 +29,9 @@ public class CreatureMovement : MonoBehaviour
     void Update()
     {
         RaycastHit _hit;
-        Physics.Raycast(creature.segments[0].transform.position, Vector3.down, out _hit, 10, groundLayers);
-        creature.segments[0].transform.position = new Vector3(creature.segments[0].transform.position.x, _hit.point.y + 5, creature.segments[0].transform.position.z);
+        Physics.Raycast(creature.segments[0].transform.position, Vector3.down, out _hit, groundDetectionRange, groundLayers);
+        creature.segments[0].transform.position = new Vector3(creature.segments[0].transform.position.x, _hit.point.y + bodyHeight, creature.segments[0].transform.position.z);
+        Debug.DrawRay(creature.segments[0].transform.position, Vector3.down,Color.cyan , groundDetectionRange);
     }
 
     private void FixedUpdate()

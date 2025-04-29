@@ -412,8 +412,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1691888240}
   m_HandleRect: {fileID: 1691888239}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.99998856
+  m_Value: 0.99999917
+  m_Size: 0.8591778
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2620,7 +2620,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0011978, y: 0}
-  m_SizeDelta: {x: 371.11, y: 540}
+  m_SizeDelta: {x: 320.4969, y: 466.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &519168854
 MonoBehaviour:
@@ -2665,7 +2665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3146,13 +3146,37 @@ MonoBehaviour:
   m_FillRect: {fileID: 1488849155}
   m_HandleRect: {fileID: 1191677592}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 0.01
+  m_MaxValue: 4
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.9
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1938842820}
+        m_TargetAssemblyTypeName: CreatureEditing, Assembly-CSharp
+        m_MethodName: UpdateStepLength
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1408243790}
+        m_TargetAssemblyTypeName: CreatureEditingPanel, Assembly-CSharp
+        m_MethodName: UpdateStepLengthText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &618997546
 GameObject:
   m_ObjectHideFlags: 0
@@ -3654,13 +3678,37 @@ MonoBehaviour:
   m_FillRect: {fileID: 432303104}
   m_HandleRect: {fileID: 861126050}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 2
+  m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1938842820}
+        m_TargetAssemblyTypeName: CreatureEditing, Assembly-CSharp
+        m_MethodName: UpdateStepSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1408243790}
+        m_TargetAssemblyTypeName: CreatureEditingPanel, Assembly-CSharp
+        m_MethodName: UpdateStepSpeedText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &809404976
 GameObject:
   m_ObjectHideFlags: 0
@@ -4079,6 +4127,8 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  groundDetectionRange: 25
+  bodyHeight: 5
 --- !u!114 &904914870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5480,13 +5530,37 @@ MonoBehaviour:
   m_FillRect: {fileID: 809404977}
   m_HandleRect: {fileID: 227486319}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 12
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1938842820}
+        m_TargetAssemblyTypeName: CreatureEditing, Assembly-CSharp
+        m_MethodName: UpdateLegs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1408243790}
+        m_TargetAssemblyTypeName: CreatureEditingPanel, Assembly-CSharp
+        m_MethodName: UpdateLegSegmentLenthText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1283668751
 GameObject:
   m_ObjectHideFlags: 0
@@ -5645,13 +5719,37 @@ MonoBehaviour:
   m_FillRect: {fileID: 115438389}
   m_HandleRect: {fileID: 1831070406}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0
+  m_MinValue: 2
+  m_MaxValue: 8
+  m_WholeNumbers: 1
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1938842820}
+        m_TargetAssemblyTypeName: CreatureEditing, Assembly-CSharp
+        m_MethodName: UpdateLegs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1408243790}
+        m_TargetAssemblyTypeName: CreatureEditingPanel, Assembly-CSharp
+        m_MethodName: UpdateLegSegmentCountText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1300015207
 GameObject:
   m_ObjectHideFlags: 0
@@ -5693,7 +5791,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00037022322}
+  m_AnchoredPosition: {x: 0, y: 0.000041886375}
   m_SizeDelta: {x: 0, y: 523}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1300015209
@@ -6138,8 +6236,18 @@ MonoBehaviour:
   bodySegmentCountSlider: {fileID: 407833419}
   bodySegmentScaleSlider: {fileID: 550108617}
   hasLegsToggle: {fileID: 1105700356}
+  legSegmentCountSlider: {fileID: 1294086092}
+  legSegmentLengthSlider: {fileID: 1281632932}
+  stepLengthSlider: {fileID: 604997694}
+  stepHeightSlider: {fileID: 2094136918}
+  stepSpeedSlider: {fileID: 791436028}
   bodySegmentCountText: {fileID: 1397596959}
   bodySegmentScaleText: {fileID: 539662496}
+  legSegmentCountText: {fileID: 1079479691}
+  legSegmentLengthText: {fileID: 139417110}
+  stepLengthText: {fileID: 215049128}
+  stepHeightText: {fileID: 34605472}
+  stepSpeedText: {fileID: 353195893}
 --- !u!1001 &1408444117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8071,7 +8179,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2036601471}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999998
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8198,12 +8306,36 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1991522797}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 6
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 2.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1938842820}
+        m_TargetAssemblyTypeName: CreatureEditing, Assembly-CSharp
+        m_MethodName: UpdateStepHeight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1408243790}
+        m_TargetAssemblyTypeName: CreatureEditingPanel, Assembly-CSharp
+        m_MethodName: UpdateStepHeightText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &8136860768303865532
 PrefabInstance:
   m_ObjectHideFlags: 0

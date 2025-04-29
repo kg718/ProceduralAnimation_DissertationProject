@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ikMode: 0
+  legSegment: {fileID: 4533452061216533867}
   nextJoint: {fileID: 5953471628062239757}
 --- !u!1 &1713348409062851209
 GameObject:
@@ -266,6 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ikMode: 0
+  legSegment: {fileID: 1713348409062851209}
   nextJoint: {fileID: 4639840291134286652}
 --- !u!1 &2441874502028379003
 GameObject:
@@ -434,6 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ikMode: 0
+  legSegment: {fileID: 2441874502028379003}
   nextJoint: {fileID: 0}
 --- !u!1 &3979936397222050388
 GameObject:
@@ -446,6 +449,7 @@ GameObject:
   - component: {fileID: 3924387900850997195}
   - component: {fileID: 889499562153163558}
   - component: {fileID: 1234186256316712684}
+  - component: {fileID: 1199168755264388272}
   m_Layer: 0
   m_Name: Leg IK L
   m_TagString: Untagged
@@ -491,6 +495,8 @@ MonoBehaviour:
   lengths:
   - 3
   - 3
+  jointParent: {fileID: 8981677979054853186}
+  jointPrefab: {fileID: 2452359756025339710, guid: b42379ccaa301724ca3b88bc73f42345, type: 3}
 --- !u!114 &1234186256316712684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +517,22 @@ MonoBehaviour:
   stepHeight: 2.5
   stepSpeed: 5
   footOrientation: {fileID: 5226959303691895876}
+--- !u!114 &1199168755264388272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3979936397222050388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9324e8672632518419398c5c63731ceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IK: {fileID: 889499562153163558}
+  segmentPrefab: {fileID: 0}
+  segmentCount: 0
+  segmentLength: 0
 --- !u!1 &4533452061216533867
 GameObject:
   m_ObjectHideFlags: 0

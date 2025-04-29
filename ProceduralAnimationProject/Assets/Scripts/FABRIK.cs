@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FABRIK : InverseKinematics
 {
     private bool iteratingForward = false;
     private bool isIterating = true;
+
+    [SerializeField] private Transform jointParent;
+    [SerializeField] private GameObject jointPrefab;
 
     void Start()
     {
@@ -104,9 +108,81 @@ public class FABRIK : InverseKinematics
         targetPosition = _position;
     }
 
+    public override void AddJoint()
+    {
+        GameObject _newJoint = Instantiate(jointPrefab);
+        joints.Insert(jointCount - 1, _newJoint.transform);
+        _newJoint.transform.parent = jointParent;
+        lengths.Add(lengths[0]);
+        AdjustJoints();
+    }
+
+    public override void RemoveJoint()
+    {
+        jointCount--;
+        joints[joints.Count - 2].gameObject.SetActive(false);
+        joints.RemoveAt(joints.Count - 2);
+        AdjustJoints();
+        lengths.RemoveAt(lengths.Count - 2);
+    }
+
+    public void AdjustJoints()
+    {
+        for (int i = 0; i < jointCount; i++)
+        {
+            joints[i].localPosition = new Vector3(0, -(lengths[i] * i), 0);
+            if(i != joints.Count)
+            {
+                joints[i].gameObject.GetComponent<IKJoint>().SetNextJoint(joints[i + 1].gameObject.GetComponent<IKJoint>());
+            }
+        }
+        jointCount = joints.Count - 1;
+
+        totalLength = 0;
+        foreach (float _length in lengths)
+        {
+            totalLength += _length;
+        }
+        if (joints.Count == 2)
+        {
+            totalLength = lengths[0];
+        }
+    }
+
+    public override void AdjustJointSegmentLength(float _length)
+    {
+        for (int i = 0; i < jointCount; i++)
+        {
+            joints[i].GetComponent<IKJoint>().legSegment.transform.localScale = new Vector3(0.2f, _length, 0.2f);
+            joints[i].GetComponent<IKJoint>().legSegment.transform.localPosition = new Vector3(0.0f, 0.0f, _length / 2);
+            if(i != joints.Count)
+            {
+                lengths[i] = _length;
+            }
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(targetObject.transform.position, 0.5f);
+    }
+    public override List<Transform> GetJoints()
+    {
+        return joints;
+    }
+
+    public override float GetTotalLength()
+    {
+        totalLength = 0;
+        foreach (float _length in lengths)
+        {
+            totalLength += _length;
+        }
+        if (joints.Count == 2)
+        {
+            totalLength = lengths[0];
+        }
+        return totalLength;
     }
 }

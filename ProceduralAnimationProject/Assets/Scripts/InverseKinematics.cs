@@ -33,4 +33,29 @@ public class InverseKinematics : MonoBehaviour
     {
 
     }
+
+    public virtual void AddJoint()
+    {
+
+    }
+    
+    public virtual void RemoveJoint()
+    {
+
+    }
+
+    public virtual void AdjustJointSegmentLength(float _length)
+    {
+
+    }
+
+    public virtual List<Transform> GetJoints()
+    {
+        return joints;
+    }
+
+    public virtual float GetTotalLength()
+    {
+        return totalLength;
+    }
 }

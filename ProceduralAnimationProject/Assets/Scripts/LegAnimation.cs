@@ -83,4 +83,19 @@ public class LegAnimation : MonoBehaviour
     {
         segment = _segment;
     }
+
+    public void UpdateStepLength(float _stepLength)
+    {
+        stepDistance = _stepLength;
+    }
+
+    public void UpdateStepHeight(float _stepHeight)
+    {
+        stepHeight = _stepHeight;
+    }
+
+    public void UpdateStepSpeed(float _stepSpeed)
+    {
+        stepSpeed = _stepSpeed;
+    }
 }

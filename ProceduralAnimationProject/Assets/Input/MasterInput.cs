@@ -105,7 +105,7 @@ public partial class @MasterInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ed138dd1-b0a3-4c3e-887e-1138a2961eae"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

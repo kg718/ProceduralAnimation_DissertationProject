@@ -102,11 +102,78 @@ public class BodySegment : MonoBehaviour
         }
     }
 
+    public void EditLegSegmentCount(int _desiredSegmentCount)
+    {
+        if (_desiredSegmentCount < leftLeg.GetComponent<InverseKinematics>().GetJoints().Count)
+        {
+            for (int i = 0; i < Mathf.Abs(_desiredSegmentCount - leftLeg.GetComponent<InverseKinematics>().GetJoints().Count); i++)
+            {
+                leftLeg.GetComponent<InverseKinematics>().RemoveJoint();
+            }
+        }
+        if (_desiredSegmentCount > leftLeg.GetComponent<InverseKinematics>().GetJoints().Count)
+        {
+            for (int i = 0; i < _desiredSegmentCount - leftLeg.GetComponent<InverseKinematics>().GetJoints().Count; i++)
+            {
+                leftLeg.GetComponent<InverseKinematics>().AddJoint();
+            }
+        }
+        if (_desiredSegmentCount < rightLeg.GetComponent<InverseKinematics>().GetJoints().Count)
+        {
+            for (int i = 0; i < Mathf.Abs(_desiredSegmentCount - rightLeg.GetComponent<InverseKinematics>().GetJoints().Count); i++)
+            {
+                rightLeg.GetComponent<InverseKinematics>().RemoveJoint();
+            }
+        }
+        if (_desiredSegmentCount > rightLeg.GetComponent<InverseKinematics>().GetJoints().Count)
+        {
+            for (int i = 0; i < _desiredSegmentCount - rightLeg.GetComponent<InverseKinematics>().GetJoints().Count; i++)
+            {
+                rightLeg.GetComponent<InverseKinematics>().AddJoint();
+            }
+        }
+        EditBodyHeight(leftLeg.GetComponent<InverseKinematics>().GetTotalLength() - 1);
+        if (isHead)
+        {
+            transform.parent.GetComponent<CreatureMovement>().bodyHeight = leftLeg.GetComponent<InverseKinematics>().GetTotalLength() - 1;
+            transform.parent.GetComponent<CreatureMovement>().groundDetectionRange = leftLeg.GetComponent<InverseKinematics>().GetTotalLength() * 5f;
+        }
+    }
+
+    public void EditLegSegmentLength(float _length)
+    {
+        leftLeg.GetComponent<InverseKinematics>().AdjustJointSegmentLength(_length);
+        rightLeg.GetComponent<InverseKinematics>().AdjustJointSegmentLength(_length);
+    }
+
     public void EditScale(float _scale)
     {
         transform.localScale = new Vector3(_scale, _scale, _scale);
 
         leftLeg.gameObject.transform.localScale = new Vector3(1 / _scale, 1 / _scale, 1 / _scale);
         rightLeg.gameObject.transform.localScale = new Vector3(1 / _scale, 1 / _scale, 1 / _scale);
+    }
+
+    public void EditStepLength(float _stepLength)
+    {
+        leftLeg.GetComponent<LegAnimation>().UpdateStepLength(_stepLength);
+        rightLeg.GetComponent<LegAnimation>().UpdateStepLength(_stepLength);
+    }
+
+    public void EditStepHeight(float _stepHeight)
+    {
+        leftLeg.GetComponent<LegAnimation>().UpdateStepHeight(_stepHeight);
+        rightLeg.GetComponent<LegAnimation>().UpdateStepHeight(_stepHeight);
+    }
+
+    public void EditStepSpeed(float _stepSpeed)
+    {
+        leftLeg.UpdateStepSpeed(_stepSpeed);
+        rightLeg.UpdateStepSpeed(_stepSpeed);
+    }
+
+    public void EditBodyHeight(float _bodyHeight)
+    {
+        bodyHeight = _bodyHeight;
     }
 }

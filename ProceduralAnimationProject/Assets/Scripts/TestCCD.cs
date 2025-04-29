@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class TestCCD : InverseKinematics
 {
     [SerializeField] private TextMeshProUGUI iterationText;
+    [SerializeField] private TextMeshProUGUI endPositionText;
 
     private int iterationCount = 0;
     private bool isIterating = true;
@@ -31,6 +33,7 @@ public class TestCCD : InverseKinematics
             SetIterating(false);
             print("CCD:" + iterationCount);
             iterationText.text = "Iterations: " + iterationCount.ToString();
+            endPositionText.text = "End Position:" + GetEndEffectorPosition().ToString();
         }
     }
 
@@ -75,6 +78,11 @@ public class TestCCD : InverseKinematics
     public bool GetIterating()
     {
         return isIterating;
+    }
+
+    public override List<Transform> GetJoints()
+    {
+        return joints;
     }
 
     public void ResetIterationCount()

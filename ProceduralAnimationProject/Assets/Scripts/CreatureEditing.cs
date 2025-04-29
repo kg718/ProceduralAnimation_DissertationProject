@@ -59,6 +59,32 @@ public class CreatureEditing : MonoBehaviour
         for (int i = 0; i < creature.segments.Length; i++)
         {
             creature.segments[i].GetComponent<BodySegment>().EditLegs(hasLegs);
+            creature.segments[i].GetComponent<BodySegment>().EditLegSegmentLength(panel.legSegmentLengthSlider.value);
+            creature.segments[i].GetComponent<BodySegment>().EditLegSegmentCount(Mathf.RoundToInt(panel.legSegmentCountSlider.value));
+        }
+    }
+
+    public void UpdateStepLength()
+    {
+        for(int i = 0; i < creature.segments.Length; i++)
+        {
+            creature.segments[i].EditStepLength(panel.stepLengthSlider.value);
+        }
+    }
+
+    public void UpdateStepHeight()
+    {
+        for(int i = 0; i < creature.segments.Length; i++)
+        {
+            creature.segments[i].EditStepHeight(panel.stepHeightSlider.value);
+        }
+    }
+
+    public void UpdateStepSpeed()
+    {
+        for (int i = 0; i < creature.segments.Length; i++)
+        {
+            creature.segments[i].EditStepSpeed(panel.stepSpeedSlider.value);
         }
     }
 }

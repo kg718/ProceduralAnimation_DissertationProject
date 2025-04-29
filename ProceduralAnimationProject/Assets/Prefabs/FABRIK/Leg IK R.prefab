@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ikMode: 0
+  legSegment: {fileID: 4448517839446389624}
   nextJoint: {fileID: 1769527288716038606}
 --- !u!1 &2826640518835602618
 GameObject:
@@ -201,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ikMode: 0
+  legSegment: {fileID: 7310576649291554988}
   nextJoint: {fileID: 0}
 --- !u!1 &4448517839446389624
 GameObject:
@@ -539,6 +541,8 @@ MonoBehaviour:
   lengths:
   - 3
   - 3
+  jointParent: {fileID: 3650336494386820387}
+  jointPrefab: {fileID: 2452359756025339710, guid: b42379ccaa301724ca3b88bc73f42345, type: 3}
 --- !u!114 &7065085799443371019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,4 +730,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ikMode: 0
+  legSegment: {fileID: 5183347793403749311}
   nextJoint: {fileID: 8034703714302860384}

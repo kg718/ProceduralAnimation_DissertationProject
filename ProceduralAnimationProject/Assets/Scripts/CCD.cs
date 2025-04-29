@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CCD : InverseKinematics
@@ -59,5 +60,15 @@ public class CCD : InverseKinematics
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(targetObject.transform.position, 0.5f);
+    }
+
+    public override List<Transform> GetJoints()
+    {
+        return joints;
+    }
+
+    public override float GetTotalLength()
+    {
+        return totalLength;
     }
 }

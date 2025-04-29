@@ -3,6 +3,7 @@ using UnityEngine;
 public class IKJoint : MonoBehaviour
 {
     [SerializeField] private IKType.IKMode ikMode = IKType.IKMode.FABRIK;
+    public GameObject legSegment;
     [SerializeField] private IKJoint nextJoint;
     //[SerializeField] private bool endEffector = false;
 
@@ -26,5 +27,10 @@ public class IKJoint : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(_jointDir);
             }
         }
+    }
+
+    public void SetNextJoint(IKJoint _joint)
+    {
+        nextJoint = _joint;
     }
 }
