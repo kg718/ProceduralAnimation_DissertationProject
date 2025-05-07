@@ -13,6 +13,7 @@ public class BodySegment : MonoBehaviour
 
     private BodySegment previousSegment;
     private bool isHead = false;
+    private bool isFalling;
 
     enum leg
     {
@@ -41,11 +42,18 @@ public class BodySegment : MonoBehaviour
     {
         if(isHead)
         {
+            if(isFalling)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
+            }
             return;
         }
         Vector3 _moveDir = previousSegment.transform.position - transform.position;
         Quaternion lookDir = Quaternion.LookRotation(_moveDir);
-        _moveDir = new Vector3(_moveDir.x, 0, _moveDir.z);
+        if(!isFalling)
+        {
+            _moveDir = new Vector3(_moveDir.x, 0, _moveDir.z);
+        }
         transform.rotation = lookDir;
         if (_moveDir.magnitude > 2.3)
         {
@@ -58,7 +66,10 @@ public class BodySegment : MonoBehaviour
 
         RaycastHit _hit;
         Physics.Raycast(transform.position, Vector3.down, out _hit, groundLayers);
-        transform.position = new Vector3(transform.position.x, _hit.point.y + bodyHeight, transform.position.z);
+        if(!isFalling)
+        {
+            transform.position = new Vector3(transform.position.x, _hit.point.y + bodyHeight, transform.position.z);
+        }
     }
 
     public void UpdateNextLeg()
@@ -86,6 +97,11 @@ public class BodySegment : MonoBehaviour
     public void SetHead()
     {
         isHead = true;
+    }
+
+    public void StartFalling()
+    {
+        isFalling = true;
     }
 
     public void EditLegs(bool _hasLegs)

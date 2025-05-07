@@ -15,6 +15,7 @@ public class CreatureMovement : MonoBehaviour
     private Vector2 inputDir;
 
     public float bodyHeight = 5f;
+    public bool isFalling = false;
 
     private void Awake()
     {
@@ -30,8 +31,18 @@ public class CreatureMovement : MonoBehaviour
     {
         RaycastHit _hit;
         Physics.Raycast(creature.segments[0].transform.position, Vector3.down, out _hit, groundDetectionRange, groundLayers);
-        creature.segments[0].transform.position = new Vector3(creature.segments[0].transform.position.x, _hit.point.y + bodyHeight, creature.segments[0].transform.position.z);
+        
         Debug.DrawRay(creature.segments[0].transform.position, Vector3.down,Color.cyan , groundDetectionRange);
+
+        if(_hit.point == Vector3.zero)
+        {
+            SimulateGravity();
+        }
+        else
+        {
+            isFalling = false;
+            creature.segments[0].transform.position = new Vector3(creature.segments[0].transform.position.x, _hit.point.y + bodyHeight, creature.segments[0].transform.position.z);
+        }
     }
 
     private void FixedUpdate()
@@ -70,5 +81,15 @@ public class CreatureMovement : MonoBehaviour
     private void OnMovement(InputValue _value)
     {
         inputDir = _value.Get<Vector2>();
+    }
+
+    public void SimulateGravity()
+    {
+        isFalling = true;
+        
+        foreach (BodySegment _segment in creature.segments)
+        {
+            _segment.StartFalling();
+        }
     }
 }

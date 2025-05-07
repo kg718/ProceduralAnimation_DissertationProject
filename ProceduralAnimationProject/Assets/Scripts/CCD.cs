@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CCD : InverseKinematics
 {
+    [SerializeField] private GameObject jointPrefab;
+
     private bool isIterating = true;
 
     void Start()
@@ -69,6 +71,85 @@ public class CCD : InverseKinematics
 
     public override float GetTotalLength()
     {
+        totalLength = 0;
+        foreach (float _length in lengths)
+        {
+            totalLength += _length;
+        }
+        if (joints.Count == 2)
+        {
+            totalLength = lengths[0];
+        }
         return totalLength;
     }
+
+    public override void AddJoint()
+    {
+        GameObject _newJoint = Instantiate(jointPrefab);
+        //Transform _footTransform = joints[jointCount - 1].transform;
+        joints.Insert(joints.Count - 1, _newJoint.transform);
+        _newJoint.transform.parent = joints[joints.Count - 3].transform;
+        joints[joints.Count - 1].transform.parent = _newJoint.transform;
+        lengths.Add(lengths[0]);
+        AdjustJoints();
+    }
+
+    public override void RemoveJoint()
+    {
+        joints[joints.Count - 1].transform.parent = joints[joints.Count - 3].transform;
+
+
+        jointCount--;
+        //Destroy(joints[joints.Count - 2].gameObject);
+        joints[joints.Count - 2].gameObject.SetActive(false);
+        joints.RemoveAt(joints.Count - 2);
+        AdjustJoints();
+        lengths.RemoveAt(lengths.Count - 2);
+    }
+
+    public void AdjustJoints()
+    {
+        for (int i = 0; i < joints.Count - 1; i++)
+        {
+            if(i != 0)
+            {
+                joints[i].localPosition = new Vector3(0, 0, lengths[i]);
+            }
+            if (joints[i].transform.childCount > 0)
+            {
+                for(int j = 0; j < joints[i].childCount; j++)
+                {
+                    joints[i].gameObject.GetComponent<IKJoint>().SetNextJoint(joints[i].transform.GetChild(j).gameObject.GetComponent<IKJoint>());
+                }
+            }
+        }
+        joints[joints.Count - 1].localPosition = new Vector3(0, 0, lengths[lengths.Count - 1]);
+        jointCount = joints.Count - 1;
+
+        totalLength = 0;
+        foreach (float _length in lengths)
+        {
+            totalLength += _length;
+        }
+        if (joints.Count == 2)
+        {
+            totalLength = lengths[0];
+        }
+    }
+
+    public override void AdjustJointSegmentLength(float _length)
+    {
+        for (int i = 0; i < jointCount; i++)
+        {
+            joints[i].GetComponent<IKJoint>().legSegment.transform.localScale = new Vector3(0.2f, _length, 0.2f);
+            joints[i].GetComponent<IKJoint>().legSegment.transform.localPosition = new Vector3(0.0f, 0.0f, _length / 2);
+            if (i != joints.Count)
+            {
+                lengths[i] = _length;
+            }
+        }
+    }
+
+
+
 }
