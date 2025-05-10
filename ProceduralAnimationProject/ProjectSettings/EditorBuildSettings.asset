@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/IK Testing.unity
     guid: f57b244500304e942ab79f8091e41cb4
+  - enabled: 1
+    path: Assets/Scenes/Generation Scene.unity
+    guid: 93313a2f4a4440a4cae8c69c7f22d3c0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: fccba0f199dce644dbbaae06b3171d5b, type: 3}
   m_UseUCBPForAssetBundles: 0

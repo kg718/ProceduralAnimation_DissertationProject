@@ -15,7 +15,7 @@ public class BodySegment : MonoBehaviour
     private bool isHead = false;
     private bool isFalling;
 
-    enum leg
+    public enum leg
     {
         UNDETERMINED,
         LEFT,
@@ -102,6 +102,16 @@ public class BodySegment : MonoBehaviour
     public void StartFalling()
     {
         isFalling = true;
+    }
+
+    public leg GetNextLeg()
+    {
+        return nextLeg;
+    }
+
+    public void SetNextLeg(leg _nextLeg)
+    {
+        nextLeg = _nextLeg;
     }
 
     public void EditLegs(bool _hasLegs)

@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CreatureEditing : MonoBehaviour
@@ -42,7 +39,27 @@ public class CreatureEditing : MonoBehaviour
             }
             activeSegments = Mathf.RoundToInt(panel.bodySegmentCountSlider.value);
         }
+    }
 
+    public void UpdateBodySegmentCount(int _segmentCount)
+    {
+        if (activeSegments > _segmentCount)
+        {
+            int _iterations = 10 - _segmentCount;
+            for (int i = _iterations; i > 0; i--)
+            {
+                creature.segments[10 - i].gameObject.SetActive(false);
+            }
+            activeSegments = _segmentCount;
+        }
+        if (activeSegments < _segmentCount)
+        {
+            for (int i = 1; i < _segmentCount; i++)
+            {
+                creature.segments[i].gameObject.SetActive(true);
+            }
+            activeSegments = _segmentCount;
+        }
     }
 
     public void UpdateBodySegmentScale()
