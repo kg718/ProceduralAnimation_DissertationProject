@@ -124,6 +124,7 @@ public class FABRIK : InverseKinematics
     {
         jointCount--;
         joints[joints.Count - 2].gameObject.SetActive(false);
+        Destroy(joints[joints.Count - 2].gameObject, 5f);
         joints.RemoveAt(joints.Count - 2); // Can't remove the last joint in the chain because that is the foot
         AdjustJoints();
         lengths.RemoveAt(lengths.Count - 2);

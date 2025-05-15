@@ -103,9 +103,8 @@ public class CCD : InverseKinematics
     {
         joints[joints.Count - 1].transform.parent = joints[joints.Count - 3].transform;
 
-
         jointCount--;
-        //Destroy(joints[joints.Count - 2].gameObject);
+        Destroy(joints[joints.Count - 2].gameObject, 5f);
         joints[joints.Count - 2].gameObject.SetActive(false);
         joints.RemoveAt(joints.Count - 2);
         AdjustJoints();
