@@ -14,6 +14,7 @@ public class TestTarget : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ccdDistanceText;
     [SerializeField] private TextMeshProUGUI fabrikStartPointText;
     [SerializeField] private TextMeshProUGUI fabrikDistanceText;
+    [SerializeField] private TextMeshProUGUI targetPosText;
 
     [SerializeField] private float randomPosRange;
 
@@ -53,6 +54,7 @@ public class TestTarget : MonoBehaviour
         fabrikStartPointText.text = "Start Position:" + _startPosFABRIK.ToString();
         Vector3 targetPoint = new Vector3(0, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, Camera.main.ScreenToWorldPoint(Input.mousePosition).z);
         targetSphere.transform.position = targetPoint;
+        targetPosText.text = targetPoint.ToString();
         ccd.SetIterating(true);
         ccd.SetTargetPosition(targetPoint);
         ccd.SetIKTarget(targetPoint);
@@ -78,6 +80,7 @@ public class TestTarget : MonoBehaviour
         float zPos = Random.Range(-randomPosRange, randomPosRange);
         Vector3 targetPoint = new Vector3(xPos, yPos, zPos);
         targetSphere.transform.position = targetPoint;
+        targetPosText.text = targetPoint.ToString();
         ccd.SetIterating(true);
         ccd.SetTargetPosition(targetPoint);
         ccd.SetIKTarget(targetPoint);

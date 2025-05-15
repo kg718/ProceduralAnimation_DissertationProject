@@ -7,6 +7,7 @@ public class bodyRotation : MonoBehaviour
 
     public GameObject leftSocket;
     public GameObject rightSocket;
+    public InverseKinematics extraIK;
 
     [SerializeField] GameObject leftLeg;
     [SerializeField] GameObject rightLeg;
@@ -31,17 +32,17 @@ public class bodyRotation : MonoBehaviour
         Vector3 _averagefootPos = leftIK.GetEndEffectorPosition() - rightIK.GetEndEffectorPosition();
         currentStepTimer += Time.deltaTime * moveSpeed;
 
-        if (_averagefootPos.y < 0 && Mathf.Abs(_averagefootPos.y) > simmilarityThreshold)
+        if (_averagefootPos.y < 0 && Mathf.Abs(_averagefootPos.y) > simmilarityThreshold) // Right foot is higher
         {
             desiredLeftPos = new Vector3(leftLeg.transform.localPosition.x, leftPos.y - height, leftLeg.transform.localPosition.z);
             desiredRightPos = new Vector3(rightLeg.transform.localPosition.x, rightPos.y + height, rightLeg.transform.localPosition.z);
         }
-        if (_averagefootPos.y > 0 && Mathf.Abs(_averagefootPos.y) > simmilarityThreshold)
+        if (_averagefootPos.y > 0 && Mathf.Abs(_averagefootPos.y) > simmilarityThreshold) // Left foot is higher
         {
             desiredLeftPos = new Vector3(leftLeg.transform.localPosition.x, leftPos.y + height, leftLeg.transform.localPosition.z);
             desiredRightPos = new Vector3(rightLeg.transform.localPosition.x, rightPos.y - height, rightLeg.transform.localPosition.z);
         }
-        if(Mathf.Abs(_averagefootPos.y) <= simmilarityThreshold)
+        if(Mathf.Abs(_averagefootPos.y) <= simmilarityThreshold) // Feet are at simmilar height
         {
             desiredLeftPos = leftPos;
             desiredRightPos = rightPos;

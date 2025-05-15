@@ -3,12 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(InverseKinematics))]
 public class LegAnimation : MonoBehaviour
 {
-    [SerializeField] private IKType.IKMode ikMode = IKType.IKMode.FABRIK;
     [SerializeField] private LayerMask walkableLayers;
     [SerializeField] private float stepDistance;
     [SerializeField] private float stepHeight;
     [SerializeField] private float stepSpeed;
     [SerializeField] private FootOrientation footOrientation;
+
     private float currentStepTimer = 1;
     private bool isStepping = false;
     private bool canStep = true;
@@ -32,12 +32,12 @@ public class LegAnimation : MonoBehaviour
         if(currentStepTimer < 1)
         {
             currentStepTimer += Time.deltaTime * stepSpeed;
-            Vector3 _lerpedPosition = oldPosition + (newPosition - oldPosition) * currentStepTimer;
-            _lerpedPosition.y += Mathf.Sin(currentStepTimer * Mathf.PI) * stepHeight;
+            Vector3 _lerpedPosition = oldPosition + (newPosition - oldPosition) * currentStepTimer; // Uses linear interpolation to create smooth animation over time
+            _lerpedPosition.y += Mathf.Sin(currentStepTimer * Mathf.PI) * stepHeight; // Get the lerped target position on a curve
 
             legIK.SetIKTarget(_lerpedPosition);
         }
-        else
+        else // Leg is not currently stepping
         {
             if(segment != null && isStepping)
             {
@@ -48,10 +48,11 @@ public class LegAnimation : MonoBehaviour
         }
         RaycastHit _hit;
         Physics.Raycast(transform.position, Vector3.down, out _hit, 20, walkableLayers);
+        //Rotates foot to match the shape of the terrain
         footOrientation.OrientFoot(_hit);
         legIK.SetTargetPosition(_hit.point);
 
-
+        //Starting a new step
         if (Mathf.Sqrt(Mathf.Pow((legIK.GetTargetPosition().x - legIK.GetEndEffectorPosition().x), 2) + Mathf.Pow((legIK.GetTargetPosition().y - legIK.GetEndEffectorPosition().y), 2)) >= stepDistance && !isStepping)
         {
             if (!canStep || currentStepTimer < 0)
@@ -64,17 +65,12 @@ public class LegAnimation : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     public bool GetIsStepping()
     {
         return isStepping;
     }
 
-    public void SetStepAbility(bool _canStep)
+    public void SetStepAbility(bool _canStep) // Only one leg can step at any given time
     {
         canStep = _canStep;
     }
@@ -83,6 +79,8 @@ public class LegAnimation : MonoBehaviour
     {
         segment = _segment;
     }
+
+    //Leg Parameter Updates
 
     public void UpdateStepLength(float _stepLength)
     {

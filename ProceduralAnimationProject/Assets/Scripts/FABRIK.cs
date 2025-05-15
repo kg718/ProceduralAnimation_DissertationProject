@@ -17,7 +17,7 @@ public class FABRIK : InverseKinematics
         {
             totalLength += _length;
         }
-        StartIteration(iteratingForward);
+        StartIteration(iteratingForward); // Can start by iterating forward or backward
     }
 
     void Update()
@@ -27,6 +27,7 @@ public class FABRIK : InverseKinematics
         {
             return;
         }
+        // Move when target is out of range
         if((targetPosition - startPosition).magnitude > totalLength)
         {
             joints[0].position = startPosition;
@@ -50,11 +51,12 @@ public class FABRIK : InverseKinematics
 
     private void IterateForward()
     {
+        //Iterate Down the chain
         for (int i = 1; i <= jointCount; i++)
         {
             Vector3 _jointDir = (joints[i].position - joints[i - 1].position).normalized;
             joints[i].position = joints[i - 1].position + _jointDir * lengths[i - 1];
-            if (i == jointCount)
+            if (i == jointCount) // end effector
             {
                 StartIteration(false);
             }
@@ -63,11 +65,12 @@ public class FABRIK : InverseKinematics
 
     private void IterateBackward()
     {
+        //Iterate Up the chain
         for (int i = jointCount - 1; i >= 0; i--)
         {
             Vector3 _jointDir = (joints[i].position - joints[i + 1].position).normalized;
             joints[i].position = joints[i + 1].position + _jointDir * lengths[i];
-            if (i == 0)
+            if (i == 0) // first joint in the chain
             {
                 StartIteration(true);
             }
@@ -78,12 +81,12 @@ public class FABRIK : InverseKinematics
     {
         if (_forward)
         {
-            joints[0].position = startPosition;
+            joints[0].position = startPosition; // Sets base of the chain to the correct position
             iteratingForward = true;
         }
         else
         {
-            joints[jointCount].position = targetPosition;
+            joints[jointCount].position = targetPosition; // Sets end effector to target position
             iteratingForward = false;
         }
     }
@@ -121,7 +124,7 @@ public class FABRIK : InverseKinematics
     {
         jointCount--;
         joints[joints.Count - 2].gameObject.SetActive(false);
-        joints.RemoveAt(joints.Count - 2);
+        joints.RemoveAt(joints.Count - 2); // Can't remove the last joint in the chain because that is the foot
         AdjustJoints();
         lengths.RemoveAt(lengths.Count - 2);
     }
@@ -162,11 +165,13 @@ public class FABRIK : InverseKinematics
         }
     }
 
+    //For displaying the IK target in editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(targetObject.transform.position, 0.5f);
     }
+
     public override List<Transform> GetJoints()
     {
         return joints;

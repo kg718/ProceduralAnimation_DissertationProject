@@ -5,6 +5,7 @@ public class BodySegment : MonoBehaviour
 {
     [SerializeField] private LegAnimation leftLeg;
     [SerializeField] private LegAnimation rightLeg;
+    [SerializeField] private LegAnimation extraLeg;
     [SerializeField] private leg nextLeg;
     [SerializeField] private float followSpeed;
     [SerializeField] private LayerMask groundLayers;
@@ -38,40 +39,50 @@ public class BodySegment : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (isHead)
+        {
+            if (isFalling)
+            {
+                //Lower the y coordinate to simmulate falling
+                transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
+            }
+        }
+    }
+
     void Update()
     {
         if(isHead)
         {
-            if(isFalling)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
-            }
-            return;
+            return; // Head of creature does not need to follow any other segment
         }
-        Vector3 _moveDir = previousSegment.transform.position - transform.position;
+        Vector3 _moveDir = previousSegment.transform.position - transform.position; // Distance from previous segment
         Quaternion lookDir = Quaternion.LookRotation(_moveDir);
         if(!isFalling)
         {
-            _moveDir = new Vector3(_moveDir.x, 0, _moveDir.z);
+            _moveDir = new Vector3(_moveDir.x, 0, _moveDir.z); // When on the ground the y coordinate should be controlled by the terrain not the other segments
         }
-        transform.rotation = lookDir;
-        if (_moveDir.magnitude > 2.3)
+        transform.rotation = lookDir; // Faces towards the previous segment
+        if (_moveDir.magnitude > 2.3) // Too far away from body
         {
             transform.position += _moveDir.normalized * followSpeed;
         }
-        if (_moveDir.magnitude < 2.7)
+        if (_moveDir.magnitude < 2.7) // Too close to body
         {
             transform.position -= _moveDir.normalized * followSpeed;
         }
 
         RaycastHit _hit;
-        Physics.Raycast(transform.position, Vector3.down, out _hit, groundLayers);
+        Physics.Raycast(transform.position, Vector3.down, out _hit, groundLayers); // Finds distance to the ground and returns the point that the raycast hits the ground
         if(!isFalling)
         {
+            //When falling, take the y coordinate of the previous segment into account when following, this lets the body trail behind 
             transform.position = new Vector3(transform.position.x, _hit.point.y + bodyHeight, transform.position.z);
         }
     }
 
+    //Determine which leg can and cannot step next
     public void UpdateNextLeg()
     {
         switch(nextLeg)
@@ -128,6 +139,22 @@ public class BodySegment : MonoBehaviour
         }
     }
 
+    public void EditExtraLeg(bool _hasLeg)
+    {
+        if(extraLeg == null)
+        {
+            return;
+        }
+        if (_hasLeg)
+        {
+            extraLeg.gameObject.SetActive(true);
+        }
+        else
+        {
+            extraLeg.gameObject.SetActive(false);
+        }
+    }
+
     public void EditLegSegmentCount(int _desiredSegmentCount)
     {
         if (_desiredSegmentCount < leftLeg.GetComponent<InverseKinematics>().GetJoints().Count)
@@ -158,6 +185,25 @@ public class BodySegment : MonoBehaviour
                 rightLeg.GetComponent<InverseKinematics>().AddJoint();
             }
         }
+        if(extraLeg != null)
+        {
+            if (_desiredSegmentCount < extraLeg.GetComponent<InverseKinematics>().GetJoints().Count)
+            {
+                for (int i = 0; i < Mathf.Abs(_desiredSegmentCount - extraLeg.GetComponent<InverseKinematics>().GetJoints().Count); i++)
+                {
+                    extraLeg.GetComponent<InverseKinematics>().RemoveJoint();
+                }
+            }
+            if (_desiredSegmentCount > extraLeg.GetComponent<InverseKinematics>().GetJoints().Count)
+            {
+                for (int i = 0; i < _desiredSegmentCount - extraLeg.GetComponent<InverseKinematics>().GetJoints().Count; i++)
+                {
+                    extraLeg.GetComponent<InverseKinematics>().AddJoint();
+                }
+            }
+        }
+
+
         EditBodyHeight(leftLeg.GetComponent<InverseKinematics>().GetTotalLength() - 1);
         if (isHead)
         {
@@ -170,6 +216,10 @@ public class BodySegment : MonoBehaviour
     {
         leftLeg.GetComponent<InverseKinematics>().AdjustJointSegmentLength(_length);
         rightLeg.GetComponent<InverseKinematics>().AdjustJointSegmentLength(_length);
+        if (extraLeg != null)
+        {
+            extraLeg.GetComponent <InverseKinematics>().AdjustJointSegmentLength(_length);
+        }
     }
 
     public void EditScale(float _scale)
@@ -178,6 +228,10 @@ public class BodySegment : MonoBehaviour
 
         leftLeg.gameObject.transform.localScale = new Vector3(1 / _scale, 1 / _scale, 1 / _scale);
         rightLeg.gameObject.transform.localScale = new Vector3(1 / _scale, 1 / _scale, 1 / _scale);
+        if (extraLeg != null)
+        {
+            extraLeg.gameObject.transform.localScale = new Vector3(1 / _scale, 1 / _scale, 1 / _scale);
+        }
     }
 
     public void EditStepLength(float _stepLength)

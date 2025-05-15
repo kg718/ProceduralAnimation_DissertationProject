@@ -6,7 +6,7 @@ public class Creature : MonoBehaviour
 
     void Start()
     {
-        segments[0].SetHead();
+        segments[0].SetHead(); // The first segment in the array is the head of the creature
         for (int i = 1; i < segments.Length; i++)
         {
             segments[i].SetPreviousSegment(segments[i - 1]);
@@ -17,11 +17,12 @@ public class Creature : MonoBehaviour
     {
         for (int i = 1; i < segments.Length; i++)
         {
-            if(i % 2 == 0)
+            //Maintaining gait symmetry
+            if(i % 2 == 0) // segment that steps at the same pace as the head
             {
                 segments[i].SetNextLeg(segments[0].GetNextLeg());
             }
-            else
+            else // segment that steps in alternation to the head
             {
                 if (segments[0].GetNextLeg() == BodySegment.leg.LEFT)
                 {

@@ -22,19 +22,14 @@ public class CreatureMovement : MonoBehaviour
         creature = GetComponent<Creature>();
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         RaycastHit _hit;
         Physics.Raycast(creature.segments[0].transform.position, Vector3.down, out _hit, groundDetectionRange, groundLayers);
         
-        Debug.DrawRay(creature.segments[0].transform.position, Vector3.down,Color.cyan , groundDetectionRange);
+        Debug.DrawRay(creature.segments[0].transform.position, Vector3.down,Color.cyan , groundDetectionRange); // Draws the ground detection raycast in edit mode
 
-        if(_hit.point == Vector3.zero)
+        if(_hit.point == Vector3.zero) // Cannot detect ground beneath segment
         {
             SimulateGravity();
         }
@@ -59,6 +54,7 @@ public class CreatureMovement : MonoBehaviour
                 moveMult = 0;
             }
 
+            //Decelerate movement
             if(moveMult > 0)
             {
                 moveMult -= deceleration;
@@ -69,12 +65,10 @@ public class CreatureMovement : MonoBehaviour
             }
         }
         creature.segments[0].gameObject.transform.position += creature.segments[0].gameObject.transform.forward * moveMult;
-        //transform.position += transform.forward * moveMult;
 
         if (Mathf.Abs(inputDir.x) > 0)
         {
             creature.segments[0].gameObject.transform.Rotate(new Vector3(0, inputDir.x * rotateSpeed, 0));
-            //transform.Rotate(new Vector3(0, inputDir.x * rotateSpeed, 0));
         }
     }
 

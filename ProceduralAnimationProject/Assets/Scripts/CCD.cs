@@ -30,11 +30,15 @@ public class CCD : InverseKinematics
     {
         for (int i = jointCount - 1; i >= 0; i--)
         {
-            Vector3 _jointToEffector = joints[jointCount].transform.position - joints[i].transform.position;
-            Vector3 _jointToTarget = targetPosition - joints[i].transform.position;
+            Vector3 _jointToEffector = joints[jointCount].transform.position - joints[i].transform.position; // the vector representing the direction from the current joint to the end effector
+            Vector3 _jointToTarget = targetPosition - joints[i].transform.position; // the vector representing the direction from the current joint to the target position
 
-            Quaternion _fromToRotation = Quaternion.FromToRotation(_jointToEffector, _jointToTarget) * joints[i].transform.rotation;
-            joints[i].transform.rotation = _fromToRotation;            
+            Quaternion _fromToRotation; // _jointToEffector needs to become equal to _jointToTarget
+            Vector3 _axis = Vector3.Cross(_jointToEffector, _jointToTarget);
+            float _angle = _jointToEffector.magnitude * _jointToTarget.magnitude + Vector3.Dot(_jointToTarget, _jointToEffector);
+            _fromToRotation = new Quaternion(_axis.x, _axis.y, _axis.z, _angle);
+            _fromToRotation = _fromToRotation.normalized * joints[i].transform.rotation;
+            joints[i].transform.rotation = _fromToRotation;
         }
     }
 
@@ -58,6 +62,7 @@ public class CCD : InverseKinematics
         targetPosition = _position;
     }
 
+    //For displaying the IK target in editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;

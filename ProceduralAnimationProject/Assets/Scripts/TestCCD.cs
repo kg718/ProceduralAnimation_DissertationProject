@@ -45,7 +45,11 @@ public class TestCCD : InverseKinematics
             Vector3 _jointToEffector = joints[jointCount].transform.position - joints[i].transform.position;
             Vector3 _jointToTarget = targetPosition - joints[i].transform.position;
 
-            Quaternion _fromToRotation = Quaternion.FromToRotation(_jointToEffector, _jointToTarget) * joints[i].transform.rotation;
+            Quaternion _fromToRotation;
+            Vector3 _axis = Vector3.Cross(_jointToEffector, _jointToTarget);
+            float _angle = _jointToEffector.magnitude * _jointToTarget.magnitude + Vector3.Dot(_jointToTarget, _jointToEffector);
+            _fromToRotation = new Quaternion(_axis.x, _axis.y, _axis.z, _angle);
+            _fromToRotation = _fromToRotation.normalized * joints[i].transform.rotation;
             joints[i].transform.rotation = _fromToRotation;
         }
     }
